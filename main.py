@@ -36,7 +36,6 @@ def ball_random_direction():
     if s==3:
         bx=-abx
         by=-aby
-    print(bx,by)
     return bx,by
 b=ball_random_direction()
 bx, by = b[0], b[1]
@@ -50,7 +49,6 @@ while running:
             running = False
     if score1==9 or score2==9:
         running = False
-    print(by,bx)
     #drawing score
     font = pygame.font.Font('freesansbold.ttf', 32)
     scorep1display = font.render(str(score1), True, (255, 255, 255))
