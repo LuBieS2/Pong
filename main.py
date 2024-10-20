@@ -15,7 +15,7 @@ player1_pos = pygame.Vector2(screen.get_width() / 10, screen.get_height() / 2)
 player2_pos = pygame.Vector2(screen.get_width() - screen.get_width()/10, screen.get_height() / 2)
 ball = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 #ball speed and direction
-speed=300
+speed=700
 abx = random.uniform(0, speed)
 aby = speed-abx
 s=random.randint(0, 3)
@@ -38,12 +38,12 @@ score1, score2 = 0, 0
 
 while running:
     screen.fill((0, 0, 0))
-    #drawing player score
-
     #closing game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    if score1==9 or score2==9:
+        running = False
     #drawing score
     font = pygame.font.Font('freesansbold.ttf', 32)
     scorep1display = font.render(str(score1), True, (255, 255, 255))
@@ -61,15 +61,16 @@ while running:
     pygame.draw.circle(screen, "white", (ball.x, ball.y), 10, 0)
     dt = clock.tick(60) / 1000
     #controls
+    pspeed=500
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        player1_pos.y -= 300 * dt
+        player1_pos.y -= pspeed * dt
     if keys[pygame.K_s]:
-        player1_pos.y += 300 * dt
+        player1_pos.y += pspeed * dt
     if keys[pygame.K_UP]:
-        player2_pos.y += 300 * dt
+        player2_pos.y -= pspeed * dt
     if keys[pygame.K_DOWN]:
-        player2_pos.y -= 300 * dt
+        player2_pos.y += pspeed * dt
     if keys[pygame.K_SPACE]:
         start=True
     #ball physics
@@ -82,4 +83,12 @@ while running:
     if start:
         ball.x += bx*dt
         ball.y += by*dt
+    if ball.x<=0:
+        score2+=1
+        ball.x=X//2
+        ball.y=Y//2
+    if ball.x>=X:
+        score1+=1
+        ball.x=X//2
+        ball.y=Y//2
     pygame.display.flip()
