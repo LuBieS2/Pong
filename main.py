@@ -50,6 +50,7 @@ while running:
             running = False
     if score1==9 or score2==9:
         running = False
+    print(by,bx)
     #drawing score
     font = pygame.font.Font('freesansbold.ttf', 32)
     scorep1display = font.render(str(score1), True, (255, 255, 255))
