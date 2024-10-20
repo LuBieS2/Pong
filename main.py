@@ -39,6 +39,8 @@ def ball_random_direction():
     return bx,by
 b=ball_random_direction()
 bx, by = b[0], b[1]
+#font
+font = pygame.font.Font('slkscr.ttf', 32)
 #playerscore
 score1, score2 = 0, 0
 while running:
@@ -48,9 +50,20 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     if score1==9 or score2==9:
+        if score1 > score2:
+            win = font.render("Player 1 won", True, (255, 255, 255))
+            winrect = win.get_rect()
+            winrect.center = (X // 2, Y // 2)
+            screen.blit(win, winrect)
+        else:
+            win = font.render("Player 2 won", True, (255, 255, 255))
+            winrect = win.get_rect()
+            winrect.center = (X // 2, Y // 2)
+            screen.blit(win, winrect)
+        death = True
         running = False
+
     #drawing score
-    font = pygame.font.Font('freesansbold.ttf', 32)
     scorep1display = font.render(str(score1), True, (255, 255, 255))
     p1rect = scorep1display.get_rect()
     p1rect.center = (X // 4, Y//8)
@@ -105,8 +118,10 @@ while running:
         ball.y=Y//2
         b = ball_random_direction()
         bx, by = b[0], b[1]
-
     print(ball.distance_to((xx, yy)))
     xx=ball.x + bx*dt
     yy=ball.y + by*dt
     pygame.display.flip()
+while death:
+    clock.tick(1)
+    death=False
